@@ -1,0 +1,38 @@
+@charset "UTF-8";
+.Article {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000;
+}
+.articlesignature {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 12px;
+	font-style: italic;
+	color: #666;
+}
+.articletitle {
+	font-family: "Arial Black", Gadget, sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+	color: #000;
+}
+
+.footer {
+	font-family: "Arial Black", Gadget, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	color: #FFF;
+	text-align: center;
+}
+
+a:link {
+	color:#FFF
+}
+
+a:visited{
+	color:#999
+}
+
+a:hover{
+	color:#00F
+}
