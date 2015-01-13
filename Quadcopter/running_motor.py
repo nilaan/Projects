@@ -1,62 +1,55 @@
-#/usr/bin/python
-#from RPIO import PWM
-#import RPIO
+import RPi.GPIO as GPIO
 import time
 
-#Time in MicroSeconds
+pins = [21, 23, 24, 26]
+pulses = [1400.0, 1400.0, 1400.0, 1400.0]
+num = 4
+p = 1500.0
 
-#List of GPIO
-pins = [9, 10, 11, 12]
-times = [0, 0, 0, 0]
-#pins = TL, TR, BL, BR
-
-'''
-def runServo(pin, time):
-    motor = PWM.Servo()
-    motor.set(pin, time)
-    motor.stop_servo(pin)
-'''
-
-def runMotor(pin, time):
-    RPIO.output(pin, True)
-    time = time/1000000
-    sleep(time)
-    RPIO.output(pin, FALSE)
-    sleep(0.02)
-    print time
+def testing():
+    for i in range(num):
+        pulses[i] = p
 
 def setMotor(pin):
-    RPIO.setup(pin, RPIO.OUT)
+    GPIO.setup(pin, GPIO.OUT)
 
-#run initMotor any time motor is reset
+def runMotor(pin, pulse):
+    pulse = pulse/1000000
+    GPIO.output(pin, 1)
+    time.sleep(pulse)
+    GPIO.output(pin, 0)
+    time.sleep(0.015)
+
 def initMotor(pin):
-    init = 0
-    while (init < 200):
-	runMotor(pin, 1000)
-	init+=1
-    print "Motor Initiated"	
+    for x in range (200):
+        runMotor(pin, 1000.0)
 
-def move():
-    for i in range(4):
-	runMotor(pins[i], times[i])
+def increase(i, pulse):
+    pulses[i] = pulse
 
-def up():
-    for i in range(4):
-	times[i] = 1600
+def shutdown():
+    for i in range(num):
+        pulses[i] = 0.0
 
-def forward():
-    for i in range(4):
-	times[i] = 1300
+GPIO.setmode(GPIO.BOARD)
+print "Board Initiated"
 
-#main
-
-print "Code Initiated"
+print "Motors Initiating.."
 for pin in pins:
     setMotor(pin)
+
 for pin in pins:
     initMotor(pin)
-print "Moving Motors"
-start = time.time()
-while (time.time() - start < 30 )  
-    move()
+print "Motors Initiated" 
 
+count = 0
+start = time.time()
+while (time.time() - start <= 20):
+    if (time.time() - start > 10):
+        if (count == 0):
+            testing()
+            count+=1
+    for i in range(num):
+        runMotor(pins[i], pulses[i])
+print "Motors ShutDown"
+GPIO.cleanup()
