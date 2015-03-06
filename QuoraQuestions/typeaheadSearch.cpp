@@ -1,9 +1,10 @@
 #include <iostream>
 #include <stdio.h>
-#include <string.h>
+#include <string>
 #include <cstdlib>
 #include <fstream>
 #include <istream>
+
 
 using namespace std; 
 
@@ -30,12 +31,31 @@ bool same (string s1, string s2)
         return true;
 }
 
+bool findS(string s1, string s2)
+{
+	int sz = s1.size();
+	for (int i = 0; i <sz; i++)
+		if (tolower(s1[i]) == tolower(s2[0]))
+		{
+			int a = i;
+			for (int j = 0; j < s2.size(); j++)
+				if (tolower(s1[a]) != tolower(s2[j]))
+					break;
+				else if (s2.size() == j+1)
+					return true;
+				else 
+					a++;
+		}
+	return false;
+}
+
+
 void add (item next)
 {
 	if (c > 0)
 	{
 		item* temp_ = new item [c + 1];
-		for (int i = 0; i < c+1; i++)
+		for (int i = 0; i < c; i++)
 		{
 			temp_[i] = list_[i];
 		}
@@ -112,14 +132,19 @@ void sort (float *arr, string *arrID, int left, int  right)
 
 void query (int results, string search)
 {
+//	if (results <2)
+//	{
+//		cout << endl;
+//		return;
+//	}
+	
 	int t = 0;
-	cout << c << endl;
 	float* arr = new float [c];
 	string* arrID = new string [c]; 
 	
 	for (int i = 0 ; i < c; i++)
 	{
-		if (same(list_[i].data, search))
+		if (findS(list_[i].data, search))
 		{
 			arr[t] = list_[i].score;
 			arrID[t] = list_[i].id;
@@ -153,15 +178,19 @@ int main ()
 	while (l < max)
 	{
 		input >> function;
+		cout << function << endl;
 		if (function == "ADD")
 		{
 			input >> type >> id >> score;
 			getline(input, data);
 			a.type = type;
 			a.id = id;
+			cout << id << endl;
 			a.score = score;
 			a.data = data;
+			cout << data << endl;;
 			add (a);	
+			cout << "done" << endl;
 		}
 		else if (function == "DEL")
 		{
@@ -174,8 +203,12 @@ int main ()
 			getline(input, data);
 			query(results, data);	
 		}
-		else{
+		else if (function == "WQUERY"){
 			getline(input, data);
+		}
+		else 
+		{
+			cout << "Wrong Input" << endl;
 		}
 		l++;
 	}
@@ -190,9 +223,13 @@ int main ()
 	cout << c << endl;
 	item a3 = {"d", "e", 2.0, "c"};
 	add (a3);
-//	del ("hi");
+	del ("hi");
 	cout << c << endl;
-	query (15, "c");
+//	query (15, "c");
+	string hello = "hello World";
+	string hi = "o w";
+	if (findS(hello, hi))
+		cout << hi << endl;
 */
 	return 0;
 }
