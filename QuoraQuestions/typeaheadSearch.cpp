@@ -1,7 +1,9 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
+#include <cstdlib>
 #include <fstream>
+#include <istream>
 
 using namespace std; 
 
@@ -112,8 +114,8 @@ void query (int results, string search)
 {
 	int t = 0;
 	cout << c << endl;
-	float* arr = new float [c-1];
-	string* arrID = new string [c-1]; 
+	float* arr = new float [c];
+	string* arrID = new string [c]; 
 	
 	for (int i = 0 ; i < c; i++)
 	{
@@ -124,41 +126,73 @@ void query (int results, string search)
 			t++;
 		}
 	}
-	sort (arr, arrID, 0, t);
+	sort (arr, arrID, 0, t-1);
 
-	for (int i = 0; i < results+1; i++)
+	for (int i = 0; i < results; i++)
+	{
+		if (i > t-1)
+			break;
 		cout << arrID[i] << " ";
+	}
 	cout << endl;
 }
 
 int main ()
 {
-	ofstream input;
-	input.open ("input.txt");
+	ifstream input ("input.txt");
 	int max;
-	cin >>  max;
+	input >>  max;
 	int l = 0;
+	string function;
+	string type;
+	string id;
+	float score;
+	string data;
+	int results;
+	item a ;
 	while (l < max)
 	{
-		
+		input >> function;
+		if (function == "ADD")
+		{
+			input >> type >> id >> score;
+			getline(input, data);
+			a.type = type;
+			a.id = id;
+			a.score = score;
+			a.data = data;
+			add (a);	
+		}
+		else if (function == "DEL")
+		{
+			input >> id; 
+			del (id);
+	 	}	
+		else if (function == "QUERY")
+		{
+			input >> results;
+			getline(input, data);
+			query(results, data);	
+		}
+		else{
+			getline(input, data);
+		}
+		l++;
 	}
-	
+/*
 	cout << "hello" << endl;			
 	cout << c << endl;
 	item a1 = {"usier", "hi", 100.0, "c"};
 	add (a1);
 	item a2 = {"a", "b", 1.0, "c"};
 	add (a2);
+	add (a2);
 	cout << c << endl;
 	item a3 = {"d", "e", 2.0, "c"};
 	add (a3);
 //	del ("hi");
 	cout << c << endl;
-	query (3, "c");
-//	int arr [c] = {0, 1, 2};
-//	cout << arr [0]; 
-//	arr = new int arr [c];
-
-
+	query (15, "c");
+*/
 	return 0;
 }
