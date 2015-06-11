@@ -1,19 +1,26 @@
+// Definite Itegral Calculater
+// use of Reiman Sums
+
 #include <iostream>
 #include <cmath>
 
+// number of intervals
 int n = 1000000;
+// bounds for definite integral
 double a ;
 double b ;
 
 
 using namespace std;
 
+// defined function; 
 double funct(double x)
 {
 	return x*x;
 }
 
 
+// implement Reiman Sums
 double calc(double a, double b)
 {
 	double x = (b-a)/double(n);

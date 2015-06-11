@@ -44,6 +44,8 @@ void loop()
   spin(1400, 10);
   Serial.println("Reset Loop");
 }
+
+// spinning in reverse direction; currently unused
 /*  
   for (pulse = 1400; pulse >= 1150; pulse -=1)
   {

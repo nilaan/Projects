@@ -1,3 +1,5 @@
+// Question 1 - Quora Application Questions 2015
+
 #include <iostream>
 #include <stdio.h>
 #include <string>
@@ -10,6 +12,7 @@ using namespace std;
 
 int c = 0;
 
+// Query Entry Type
 struct item
 {
 	string type;
@@ -20,6 +23,7 @@ struct item
 
 item *list_;
 
+// identifies if two strings are identical, regardless of capitilization
 bool same (string s1, string s2)
 {
         int sz = s1.size();
@@ -31,6 +35,7 @@ bool same (string s1, string s2)
         return true;
 }
 
+// identifies if one string is existent as a substring of another
 bool findS(string s1, string s2)
 {
 	int sz = s1.size();
@@ -49,7 +54,7 @@ bool findS(string s1, string s2)
 	return false;
 }
 
-
+// add query entry into database
 void add (item next)
 {
 	if (c > 0)
@@ -70,6 +75,8 @@ void add (item next)
 	}	
 	c++;
 }
+
+// remove data entry from database
 
 void del (string id2)
 {
@@ -96,7 +103,7 @@ void del (string id2)
 	} 
 }
 
-
+// recursively sort data in order of significance
 void sort (float *arr, string *arrID, int left, int  right)
 {
 	int i = left;
@@ -130,6 +137,7 @@ void sort (float *arr, string *arrID, int left, int  right)
 		sort (arr, arrID, i, right);
 }
 
+// searches database for existense of an entry
 void query (int results, string search)
 {
 //	if (results <2)
@@ -164,6 +172,7 @@ void query (int results, string search)
 
 int main ()
 {
+	// recieves input entries of from input.txt file stores in same folder
 	ifstream input ("input.txt");
 	int max;
 	input >>  max;
@@ -212,24 +221,6 @@ int main ()
 		}
 		l++;
 	}
-/*
-	cout << "hello" << endl;			
-	cout << c << endl;
-	item a1 = {"usier", "hi", 100.0, "c"};
-	add (a1);
-	item a2 = {"a", "b", 1.0, "c"};
-	add (a2);
-	add (a2);
-	cout << c << endl;
-	item a3 = {"d", "e", 2.0, "c"};
-	add (a3);
-	del ("hi");
-	cout << c << endl;
-//	query (15, "c");
-	string hello = "hello World";
-	string hi = "o w";
-	if (findS(hello, hi))
-		cout << hi << endl;
-*/
+
 	return 0;
 }
